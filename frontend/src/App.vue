@@ -2,7 +2,6 @@
 import { RouterView } from 'vue-router'
 import { useWeb3 } from './store/web3'
 import BaseDialogForm from '@/components/UI/Dialogs/BaseDialogForm.vue'
-import BaseAlerts from '@/components/UI/Alerts/BaseAlerts.vue'
 import PageNavbar from '@/components/navbar/PageNavbar.vue'
 const web3 = useWeb3()
 
@@ -16,7 +15,6 @@ web3.loadBefore()
     <RouterView />
   </div>
   <BaseDialogForm />
-  <BaseAlerts />
 </template>
 
 <style lang="css">
