@@ -1,0 +1,12 @@
+stages:
+  - test
+
+hardhat-test:
+  stage: test
+  tags:
+    - bc
+    - shell
+  variables:
+    MORALIS_ID: $MORALIS_ID_DEV
+  script:
+    - ./contracts/cicd/hardhat-test.sh

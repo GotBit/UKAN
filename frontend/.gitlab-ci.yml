@@ -1,0 +1,21 @@
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_HOST: tcp://localhost:2375
+  DOCKER_TLS_CERTDIR: ""
+  REGISTRY_IMAGE: registry.production.bc.gotbitgames.co/altbase-frontend
+
+services:
+  - docker:19.03.12-dind
+
+before_script:
+  - docker info
+
+build:
+  stage: build
+  image: docker:19.03.12
+  tags:
+    - k8s
+  script:
+    - docker pull $REGISTRY_IMAGE:latest || true
+    - docker build --cache-from $REGISTRY_IMAGE:latest --tag $REGISTRY_IMAGE:latest ./frontend
+    - docker push $REGISTRY_IMAGE:latest

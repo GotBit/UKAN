@@ -1,0 +1,76 @@
+<script setup lang="ts">
+import { RouterView } from 'vue-router'
+import { useWeb3 } from './store/web3'
+import BaseDialogForm from '@/components/UI/Dialogs/BaseDialogForm.vue'
+import BaseAlerts from '@/components/UI/Alerts/BaseAlerts.vue'
+import PageNavbar from '@/components/navbar/PageNavbar.vue'
+const web3 = useWeb3()
+
+web3.loadBefore()
+
+</script>
+
+<template>
+  <PageNavbar />
+  <div>
+    <RouterView />
+  </div>
+  <BaseDialogForm />
+  <BaseAlerts />
+</template>
+
+<style lang="css">
+@font-face {
+  font-family: 'Montserrat';
+  src: local('Montserrat'), url(/fonts/Montserrat/Montserrat-Black.ttf);
+  font-weight: 900;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: local('Montserrat'), url(/fonts/Montserrat/Montserrat-ExtraBold.ttf);
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: local('Montserrat'), url(/fonts/Montserrat/Montserrat-Bold.ttf);
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: local('Montserrat'), url(/fonts/Montserrat/Montserrat-SemiBold.ttf);
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: local('Montserrat'), url(/fonts/Montserrat/Montserrat-Medium.ttf);
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: local('Montserrat'), url(/fonts/Montserrat/Montserrat-Regular.ttf);
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: local('Montserrat'), url(/fonts/Montserrat/Montserrat-Light.ttf);
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: local('Montserrat'), url(/fonts/Montserrat/Montserrat-ExtraLight.ttf);
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: local('Montserrat'), url(/fonts/Montserrat/Montserrat-Thin.ttf);
+  font-weight: 100;
+}
+</style>
