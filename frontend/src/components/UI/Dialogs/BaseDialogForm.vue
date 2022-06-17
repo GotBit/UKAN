@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import { useDialogs } from '@/store/UI/dialogs'
 
+function close() {
+  if (dialogsStore.currentDialog?.closeable) {
+    dialogsStore.closeCurrentDialog()
+  }
+}
+
 const dialogsStore = useDialogs();
 </script>
 
 <template>
-  <div v-show="dialogsStore.currentDialog !== undefined" @click="dialogsStore.closeCurrentDialog" class="custom-dialog">
+  <div v-show="dialogsStore.currentDialog !== undefined" @click="close" class="custom-dialog">
     <div class="gradient-border">
       <div @click.stop class="wrapper">
         <div class="dialog-form">

@@ -1,10 +1,5 @@
 <script setup lang="ts">
 import Spinner from './Spinner.vue'
-
-const props = defineProps<{
-  text: string,
-}>();
-
 </script>
 
 <script lang="ts">

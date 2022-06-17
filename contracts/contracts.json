@@ -1,11 +1,4 @@
 {
-  "97": [
-    {
-      "name": "bsc_testnet",
-      "chainId": "97",
-      "contracts": {}
-    }
-  ],
   "31337": [
     {
       "name": "hardhat",
@@ -19,7 +12,7 @@
       "chainId": "43113",
       "contracts": {
         "Token": {
-          "address": "0x0c3e6323C8605E3Db838A921dB65b50C98aa6084",
+          "address": "0x92af0299886b3772809F0CdcA27b85ec1437a800",
           "abi": [
             {
               "inputs": [
@@ -315,7 +308,7 @@
           ]
         },
         "Vesting": {
-          "address": "0x9148760d47cBeE92177A60777468531553428854",
+          "address": "0x6553b1e99C08eEBD3028Ed8BD43157AB5e531e3B",
           "abi": [
             {
               "inputs": [
@@ -323,11 +316,6 @@
                   "internalType": "contract IERC20",
                   "name": "newToken",
                   "type": "address"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "newDuration",
-                  "type": "uint256"
                 }
               ],
               "stateMutability": "nonpayable",
@@ -363,30 +351,26 @@
                   "internalType": "uint256",
                   "name": "newAmount",
                   "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "newSlicePeriod",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "newStartTime",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "newDuration",
+                  "type": "uint256"
                 }
               ],
               "name": "addUser",
               "outputs": [],
               "stateMutability": "nonpayable",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "address",
-                  "name": "",
-                  "type": "address"
-                }
-              ],
-              "name": "amounts",
-              "outputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "stateMutability": "view",
               "type": "function"
             },
             {
@@ -413,25 +397,6 @@
               "name": "claim",
               "outputs": [],
               "stateMutability": "nonpayable",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "address",
-                  "name": "",
-                  "type": "address"
-                }
-              ],
-              "name": "claimed",
-              "outputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "stateMutability": "view",
               "type": "function"
             },
             {
@@ -478,6 +443,45 @@
               "name": "transferOwnership",
               "outputs": [],
               "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "name": "vestings",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "amount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "claimed",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "slicePeriod",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "startTime",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "duration",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
               "type": "function"
             }
           ]

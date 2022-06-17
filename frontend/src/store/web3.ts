@@ -39,9 +39,12 @@ export const useWeb3 = defineStore('web3', {
     },
     async connect(walletType: WalletType) {
       this.walletHandler = markRaw(new registerWallets[walletType](chainIds, this.neededChainId, this.updateStoreState, (wallet: string) => this.loadAfter())) // markRaw is needed to specify walletHandler to be not reactive
-      await this.walletHandler?.connect()
-      this.login = true
-      await this.loadAfter()
+      this.login = await this.walletHandler?.connect()
+      if (this.login) {
+        this.loading = true
+        await this.loadAfter()
+        this.loading = false
+      }
     },
     async switchChain(chainId: ChainId) {
       const res = await this.walletHandler?.switchChain(chainId)

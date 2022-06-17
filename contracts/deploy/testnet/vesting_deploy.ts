@@ -14,7 +14,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
     await deploy('Vesting', {
         from: deployer,
-        args: [token.address, BigNumber.from(2592000)],
+        args: [token.address],
         log: true,
     });
 };

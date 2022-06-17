@@ -1,13 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useWeb3 } from '@/store/web3'
-import { useDialogs } from '@/store/UI/dialogs'
-import { useVestingInfo } from '@/store/contracts/vesting';
 
 const web3 = useWeb3()
-const dialogs = useDialogs()
-const vestingInfo = useVestingInfo()
-const isOpened = ref(false)
 
 </script>
 
@@ -18,13 +12,8 @@ const isOpened = ref(false)
       <div class="UKAN">UKAN TOK<span>EN</span></div>
     </div>
     <div class="header_navigation">
-      <button v-if="!web3.login" @click="dialogs.openDialog('connectDialog', {})">
-        Connect wallet
-      </button>
-      <div v-else class="header_user">
-        <button @click="vestingInfo.disconnect()">
-          <p>{{ web3.walletLabel }} <img class="image" src="/svg/icons/exit.svg" /></p>
-        </button>
+      <div v-if="web3.login && !web3.loading" class="header_user">
+        <p>{{ web3.walletLabel }}</p>
       </div>
     </div>
   </div>
@@ -71,10 +60,8 @@ const isOpened = ref(false)
 .header_user {
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 212px;
-}
-
-button {
   background: #0C69D0;
   border-radius: 12px;
   font-family: 'Montserrat';
@@ -87,28 +74,10 @@ button {
   padding: 16px 24px;
 }
 
-button:hover {
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), #005ABE;
-}
-
-button:active {
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), #003978;
-}
-
 p {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.image {
-  margin-left: 10px;
-}
-
-.header_user-wallet:hover {
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), #3772FF;
-  box-shadow: 0 4px 39px rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
 }
 
 @media (max-width: 799px) {

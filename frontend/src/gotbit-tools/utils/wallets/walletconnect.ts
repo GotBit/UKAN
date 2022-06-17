@@ -32,9 +32,6 @@ export class Walletconnect implements Wallet {
     for (const chainId of chainIds) {
       rpc[parseInt(chainId)] = getChainRpc(chainId)
     }
-    console.log(getChainRpc("56" as ChainId))
-    rpc[parseInt("56")] = getChainRpc("56" as ChainId)
-    rpc[parseInt("43114")] = getChainRpc("43114" as ChainId)
 
     this.wcProvider = new WalletConnectProvider({
       rpc,

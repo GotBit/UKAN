@@ -53,7 +53,7 @@ export const useVestingInfo = defineContractStore<IVestingState, IVestingAction>
             const token = useContract<Token>(user.neededChainId, 'Token')
             const vesting = useContract<Vesting>(user.neededChainId, 'Vesting')
 
-            const [info, err] = await safe(Promise.all([token.balanceOf(user.wallet!), vesting.available(user.wallet!), vesting.amounts(user.wallet!), vesting.claimed(user.wallet!)]))
+            const [info, err] = await safe(Promise.all([token.balanceOf(user.wallet!), vesting.available(user.wallet!), vesting.vestings(user.wallet!)]))
 
             if (!info || err) {
                 this.loading = false
@@ -61,10 +61,10 @@ export const useVestingInfo = defineContractStore<IVestingState, IVestingAction>
                 return false
             } else {
                 this.balance = info[0]
-                this.total = info[2]
-                this.lockedBalance = info[2].sub(info[1])
-                this.availableToClaim = info[1]
-                this.claimed = info[3]
+                this.total = info[2].amount
+                this.lockedBalance = info[2].amount.sub(info[1])
+                this.availableToClaim = info[1].add(info[2].claimed)
+                this.claimed = info[2].claimed
             }
 
             this.loading = false

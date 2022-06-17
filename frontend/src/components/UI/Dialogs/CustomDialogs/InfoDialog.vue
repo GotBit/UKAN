@@ -102,8 +102,8 @@ export default {
 button:active:after {
     content: 'Copied';
     position: absolute;
-    top: 0px;
-    margin-left: 20px;
+    top: 25px;
+    margin-left: -20px;
 }
 
 button {

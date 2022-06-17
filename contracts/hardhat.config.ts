@@ -56,7 +56,7 @@ const config: HardhatUserConfig = {
   namedAccounts: {
     deployer: {
       default: 0,
-      bsc_testnet: "0xeF16b7ECC977276CEb7f3c9689200bF9DF54a8c5"
+      avax_testnet: "0xeF16b7ECC977276CEb7f3c9689200bF9DF54a8c5"
     },
     user_1: {
       default: 1,

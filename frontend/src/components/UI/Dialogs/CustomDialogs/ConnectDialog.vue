@@ -4,6 +4,16 @@ import { useDialogs } from '@/store/UI/dialogs'
 
 const dialogsStore = useDialogs();
 const web3 = useWeb3();
+
+async function connectMetamask() {
+  await web3.connect('metamask')
+  dialogsStore.closeCurrentDialog()
+}
+
+async function connectWalletConnect() {
+  await web3.connect('walletconnect')
+  dialogsStore.closeCurrentDialog()
+}
 </script>
 
 <script lang="ts">
@@ -19,11 +29,11 @@ export default {
       <div class="small-text">Choose wallet provider to connect</div>
     </div>
     <div class="connect-buttons">
-      <button @click="web3.connect('metamask'); dialogsStore.closeCurrentDialog();">
+      <button @click="connectMetamask()">
         <img src="/svg/icons/metamask-icon.svg" />
         Metamask
       </button>
-      <button @click="web3.connect('walletconnect'); dialogsStore.closeCurrentDialog();">
+      <button @click="connectWalletConnect()">
         <img src="/svg/icons/walletconnect-icon.svg">
         Walletconnect
       </button>

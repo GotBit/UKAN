@@ -21,25 +21,22 @@ import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface VestingInterface extends ethers.utils.Interface {
   functions: {
-    "addUser(address,uint256)": FunctionFragment;
-    "amounts(address)": FunctionFragment;
+    "addUser(address,uint256,uint256,uint256,uint256)": FunctionFragment;
     "available(address)": FunctionFragment;
     "claim()": FunctionFragment;
-    "claimed(address)": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "token()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
+    "vestings(address)": FunctionFragment;
   };
 
   encodeFunctionData(
     functionFragment: "addUser",
-    values: [string, BigNumberish]
+    values: [string, BigNumberish, BigNumberish, BigNumberish, BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "amounts", values: [string]): string;
   encodeFunctionData(functionFragment: "available", values: [string]): string;
   encodeFunctionData(functionFragment: "claim", values?: undefined): string;
-  encodeFunctionData(functionFragment: "claimed", values: [string]): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
@@ -50,12 +47,11 @@ interface VestingInterface extends ethers.utils.Interface {
     functionFragment: "transferOwnership",
     values: [string]
   ): string;
+  encodeFunctionData(functionFragment: "vestings", values: [string]): string;
 
   decodeFunctionResult(functionFragment: "addUser", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "amounts", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "available", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "claim", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "claimed", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
@@ -66,6 +62,7 @@ interface VestingInterface extends ethers.utils.Interface {
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "vestings", data: BytesLike): Result;
 
   events: {
     "OwnershipTransferred(address,address)": EventFragment;
@@ -125,18 +122,17 @@ export class Vesting extends BaseContract {
     addUser(
       newUser: string,
       newAmount: BigNumberish,
+      newSlicePeriod: BigNumberish,
+      newStartTime: BigNumberish,
+      newDuration: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-
-    amounts(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     available(newUser: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     claim(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-
-    claimed(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -150,23 +146,35 @@ export class Vesting extends BaseContract {
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    vestings(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+        amount: BigNumber;
+        claimed: BigNumber;
+        slicePeriod: BigNumber;
+        startTime: BigNumber;
+        duration: BigNumber;
+      }
+    >;
   };
 
   addUser(
     newUser: string,
     newAmount: BigNumberish,
+    newSlicePeriod: BigNumberish,
+    newStartTime: BigNumberish,
+    newDuration: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
-
-  amounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   available(newUser: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   claim(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
-
-  claimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -181,20 +189,32 @@ export class Vesting extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  vestings(
+    arg0: string,
+    overrides?: CallOverrides
+  ): Promise<
+    [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+      amount: BigNumber;
+      claimed: BigNumber;
+      slicePeriod: BigNumber;
+      startTime: BigNumber;
+      duration: BigNumber;
+    }
+  >;
+
   callStatic: {
     addUser(
       newUser: string,
       newAmount: BigNumberish,
+      newSlicePeriod: BigNumberish,
+      newStartTime: BigNumberish,
+      newDuration: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    amounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     available(newUser: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     claim(overrides?: CallOverrides): Promise<void>;
-
-    claimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -206,6 +226,19 @@ export class Vesting extends BaseContract {
       newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    vestings(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+        amount: BigNumber;
+        claimed: BigNumber;
+        slicePeriod: BigNumber;
+        startTime: BigNumber;
+        duration: BigNumber;
+      }
+    >;
   };
 
   filters: {
@@ -230,18 +263,17 @@ export class Vesting extends BaseContract {
     addUser(
       newUser: string,
       newAmount: BigNumberish,
+      newSlicePeriod: BigNumberish,
+      newStartTime: BigNumberish,
+      newDuration: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
-
-    amounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     available(newUser: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     claim(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
-
-    claimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -255,18 +287,18 @@ export class Vesting extends BaseContract {
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    vestings(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addUser(
       newUser: string,
       newAmount: BigNumberish,
+      newSlicePeriod: BigNumberish,
+      newStartTime: BigNumberish,
+      newDuration: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    amounts(
-      arg0: string,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     available(
@@ -276,11 +308,6 @@ export class Vesting extends BaseContract {
 
     claim(
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    claimed(
-      arg0: string,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -294,6 +321,11 @@ export class Vesting extends BaseContract {
     transferOwnership(
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    vestings(
+      arg0: string,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }
