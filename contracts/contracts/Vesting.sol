@@ -40,6 +40,7 @@ contract Vesting is Ownable {
 
     /**
      * @notice Function to add certain user for vesting
+     * @param newUser Address of user
      * @param newAmount Amount allocated for user
      * @param newSlicePeriod Period for which user can get reward
      * @param newStartTime Start time of vesting
@@ -74,7 +75,7 @@ contract Vesting is Ownable {
     }
 
     /**
-     * External function for user to claim gis reward
+     * External function for user to claim his reward
      */
     function claim() external {
         uint256 availableTokens = available(msg.sender);

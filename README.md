@@ -6,8 +6,6 @@
 
 ### [Test coverage](#test-coverage-statistics)
 
-## Documentation
-
 ### [Vesting](#vesting)
 
 ## Usage example
@@ -25,7 +23,7 @@ To get more information please check corresponding documentation.
 
 ## Test coverage statistics
 
-```
+```text
   Vesting tests
     Vesting successful unit tests
       ✔ Should successfully constuct vesting (394ms)
@@ -115,7 +113,7 @@ Function to add certain user for vesting
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| newUser | address |  |
+| newUser | address | Address of user |
 | newAmount | uint256 | Amount allocated for user |
 | newSlicePeriod | uint256 | Period for which user can get reward |
 | newStartTime | uint256 | Start time of vesting |

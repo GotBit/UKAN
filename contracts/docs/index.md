@@ -58,7 +58,7 @@ Function to add certain user for vesting
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| newUser | address |  |
+| newUser | address | Address of user |
 | newAmount | uint256 | Amount allocated for user |
 | newSlicePeriod | uint256 | Period for which user can get reward |
 | newStartTime | uint256 | Start time of vesting |
@@ -70,7 +70,7 @@ Function to add certain user for vesting
 function claim() external
 ```
 
-External function for user to claim gis reward
+External function for user to claim his reward
 
 ### available
 
@@ -83,18 +83,3 @@ Function to see how much tokens is available
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | newUser | address | Address of user, which reward we want to calculate |
-
-## Token
-
-### _decimals
-
-```solidity
-uint8 _decimals
-```
-
-### constructor
-
-```solidity
-constructor(string name_, string symbol_, uint8 decimals_) public
-```
-
