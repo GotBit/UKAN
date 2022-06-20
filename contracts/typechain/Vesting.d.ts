@@ -66,13 +66,31 @@ interface VestingInterface extends ethers.utils.Interface {
 
   events: {
     "OwnershipTransferred(address,address)": EventFragment;
+    "RewardClaimed(address,uint256)": EventFragment;
+    "UserAdded(address,uint256,uint256,uint256,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RewardClaimed"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "UserAdded"): EventFragment;
 }
 
 export type OwnershipTransferredEvent = TypedEvent<
   [string, string] & { previousOwner: string; newOwner: string }
+>;
+
+export type RewardClaimedEvent = TypedEvent<
+  [string, BigNumber] & { user: string; amount: BigNumber }
+>;
+
+export type UserAddedEvent = TypedEvent<
+  [string, BigNumber, BigNumber, BigNumber, BigNumber] & {
+    user: string;
+    amount: BigNumber;
+    slicePeriod: BigNumber;
+    startTime: BigNumber;
+    duration: BigNumber;
+  }
 >;
 
 export class Vesting extends BaseContract {
@@ -256,6 +274,56 @@ export class Vesting extends BaseContract {
     ): TypedEventFilter<
       [string, string],
       { previousOwner: string; newOwner: string }
+    >;
+
+    "RewardClaimed(address,uint256)"(
+      user?: string | null,
+      amount?: null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { user: string; amount: BigNumber }
+    >;
+
+    RewardClaimed(
+      user?: string | null,
+      amount?: null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { user: string; amount: BigNumber }
+    >;
+
+    "UserAdded(address,uint256,uint256,uint256,uint256)"(
+      user?: string | null,
+      amount?: null,
+      slicePeriod?: null,
+      startTime?: null,
+      duration?: null
+    ): TypedEventFilter<
+      [string, BigNumber, BigNumber, BigNumber, BigNumber],
+      {
+        user: string;
+        amount: BigNumber;
+        slicePeriod: BigNumber;
+        startTime: BigNumber;
+        duration: BigNumber;
+      }
+    >;
+
+    UserAdded(
+      user?: string | null,
+      amount?: null,
+      slicePeriod?: null,
+      startTime?: null,
+      duration?: null
+    ): TypedEventFilter<
+      [string, BigNumber, BigNumber, BigNumber, BigNumber],
+      {
+        user: string;
+        amount: BigNumber;
+        slicePeriod: BigNumber;
+        startTime: BigNumber;
+        duration: BigNumber;
+      }
     >;
   };
 

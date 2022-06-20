@@ -14,8 +14,4 @@ contract Token is ERC20 {
         _decimals = decimals_;
         _mint(msg.sender, 1_000_000_000_000_000 ether);
     }
-
-    function decimals() public view override returns (uint8) {
-        return _decimals;
-    }
 }
