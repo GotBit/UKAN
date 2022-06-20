@@ -12,13 +12,13 @@ async function addUser() {
 
     const amount = BigNumber.from("100000000000000000000000000000000")
 
-    const slice = BigNumber.from("60")
+    const slice = BigNumber.from("30")
 
     const oneYear = BigNumber.from("31536000")
 
     const currentDate = new Date();
     let timestamp = currentDate.getTime()
-    timestamp = Number((timestamp / 1000).toFixed()) + 100;
+    timestamp = Number((timestamp / 1000).toFixed()) + 10;
 
     const blockNumBefore = await ethers.provider.getBlockNumber();
     const blockBefore = await ethers.provider.getBlock(blockNumBefore);
@@ -27,10 +27,10 @@ async function addUser() {
     console.log(timestampBefore)
     console.log(timestamp)
 
-    // const startTime = BigNumber.from(timestamp)
+    const startTime = BigNumber.from(timestamp)
 
-    // await token.transfer(vesting.address, amount)
-    // await vesting.addUser(deployer, amount, slice, startTime, oneYear)
+    await token.transfer(vesting.address, amount)
+    await vesting.addUser('0xe51269cB15628D9f5c785b21Ce7421924369Dde2', amount, slice, startTime, oneYear)
 }
 
 addUser()
