@@ -6,7 +6,7 @@
 
 ### [Test coverage](#test-coverage-statistics)
 
-### [Vesting](#vesting)
+### [Vesting struct](#vesting)
 
 ## Usage example
 
