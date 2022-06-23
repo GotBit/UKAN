@@ -15,6 +15,7 @@ To get more information please check corresponding documentation.
 
 ### Functional requirements
 
+- The main goal of this contract is to create vesting once for 1 or more wallets.
 - Customer should be able to deploy contract and specialize token, which he wants to distribute
 - Customer should send tokens by himself on this contract in any time he wants
 - Customer should be able to add user for vesting shedule
