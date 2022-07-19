@@ -1,6 +1,6 @@
 //SPDX-License-Identifier: UNLICENSED
 
-pragma solidity 0.8.10;
+pragma solidity 0.8.15;
 
 import '@openzeppelin/contracts/access/Ownable.sol';
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
@@ -8,6 +8,14 @@ import '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol';
 
 contract Vesting is Ownable {
     using SafeERC20 for IERC20;
+
+    error ZeroToken();
+    error NullUser();
+    error AlreadyAdded();
+    error TooSoon();
+    error ZeroDuration();
+    error ZeroClaim();
+
     IERC20 public immutable token;
 
     mapping(address => VestingStruct) public vestings;
@@ -34,7 +42,9 @@ contract Vesting is Ownable {
      * @param newToken ERC-20 token address for vesting
      */
     constructor(IERC20 newToken) {
-        require(address(newToken) != address(0));
+        if (address(newToken) == address(0)) {
+            revert ZeroToken();
+        }
         token = newToken;
     }
 
@@ -53,15 +63,21 @@ contract Vesting is Ownable {
         uint256 newStartTime,
         uint256 newDuration
     ) external onlyOwner {
-        require(newUser != address(0), 'User isnt specified');
-        require(
-            vestings[newUser].amount == 0,
-            'This user has been already added to vesting'
-        );
-        require(
-            block.timestamp <= newStartTime,
-            'Cant make start before block.timestamp time'
-        );
+        if (newUser == address(0)) {
+            revert NullUser();
+        }
+
+        if (vestings[newUser].amount != 0) {
+            revert AlreadyAdded();
+        }
+
+        if (block.timestamp >= newStartTime) {
+            revert TooSoon();
+        }
+
+        if (newDuration == 0 || newSlicePeriod == 0) {
+            revert ZeroDuration();
+        }
 
         vestings[newUser] = VestingStruct({
             amount: newAmount,
@@ -79,7 +95,9 @@ contract Vesting is Ownable {
      */
     function claim() external {
         uint256 availableTokens = available(msg.sender);
-        require(availableTokens > 0, 'Cant claim zero tokens');
+        if (availableTokens == 0) {
+            revert ZeroClaim();
+        }
 
         vestings[msg.sender].claimed += availableTokens;
         token.safeTransfer(msg.sender, availableTokens);
@@ -98,17 +116,11 @@ contract Vesting is Ownable {
             return 0;
         }
 
-        uint256 endTime = current.startTime + current.duration;
-
-        uint256 lastTimeApplicable = block.timestamp > endTime
-            ? endTime
-            : block.timestamp;
-
-        if (lastTimeApplicable == endTime) {
+        if (block.timestamp >= current.startTime + current.duration) {
             return current.amount - current.claimed;
         }
 
-        uint256 timeFromStart = lastTimeApplicable - current.startTime;
+        uint256 timeFromStart = block.timestamp - current.startTime;
 
         uint256 vestedSlicePeriods = timeFromStart / current.slicePeriod;
         uint256 vestedSeconds = vestedSlicePeriods * current.slicePeriod;

@@ -135,7 +135,29 @@ describe('Vesting tests', () => {
 
             const zeroAddress = '0x0000000000000000000000000000000000000000'
 
-            await expect(vesting.addUser(zeroAddress, amount, slicePeriod, startTime, duration)).to.be.revertedWith('User isnt specified')
+            await expect(vesting.addUser(zeroAddress, amount, slicePeriod, startTime, duration)).to.be.revertedWith('NullUser()')
+        })
+
+        it('Should fail on adding user to vesting, cause duration is zero', async function () {
+            const { vesting, user_1 } = await setup()
+
+            const amount = BigNumber.from('216000000000000000000')
+            const slicePeriod = BigNumber.from('86400') // 1 day
+            const startTime = await getTime()
+            const duration = BigNumber.from('0')
+
+            await expect(vesting.addUser(user_1.address, amount, slicePeriod, startTime, duration)).to.be.revertedWith('ZeroDuration()')
+        })
+
+        it('Should fail on adding user to vesting, cause newSlicePeriod is zero', async function () {
+            const { vesting, user_1 } = await setup()
+
+            const amount = BigNumber.from('216000000000000000000')
+            const slicePeriod = BigNumber.from('0')
+            const startTime = await getTime()
+            const duration = BigNumber.from('2160000')
+
+            await expect(vesting.addUser(user_1.address, amount, slicePeriod, startTime, duration)).to.be.revertedWith('ZeroDuration()')
         })
 
         it('Should fail on adding user to vesting, cause user has been already added', async function () {
@@ -147,7 +169,7 @@ describe('Vesting tests', () => {
             const duration = BigNumber.from('2160000') // 25 days
 
             await vesting.addUser(user_1.address, amount, slicePeriod, startTime, duration)
-            await expect(vesting.addUser(user_1.address, amount, slicePeriod, startTime, duration)).to.be.revertedWith('This user has been already added to vesting')
+            await expect(vesting.addUser(user_1.address, amount, slicePeriod, startTime, duration)).to.be.revertedWith('AlreadyAdded()')
         })
 
         it('Should fail on adding user to vesting, cause incorrect start time', async function () {
@@ -158,7 +180,7 @@ describe('Vesting tests', () => {
             const startTime = (await getTime()).sub(10)
             const duration = BigNumber.from('2160000') // 25 days
 
-            await expect(vesting.addUser(user_1.address, amount, slicePeriod, startTime, duration)).to.be.revertedWith('Cant make start before block.timestamp time')
+            await expect(vesting.addUser(user_1.address, amount, slicePeriod, startTime, duration)).to.be.revertedWith('TooSoon()')
         })
 
         it('Should fail on claiming reward, cause have zero available tokens', async function () {
@@ -177,7 +199,7 @@ describe('Vesting tests', () => {
             await time.increaseTime(halfOfDay)
             await time.mine()
 
-            await expect(user_1.vesting.claim()).to.be.revertedWith('Cant claim zero tokens')
+            await expect(user_1.vesting.claim()).to.be.revertedWith('ZeroClaim()')
         })
 
         it('Should fail on claiming reward, cause block.timestamp less than start', async function () {
@@ -192,7 +214,7 @@ describe('Vesting tests', () => {
 
             await vesting.addUser(user_1.address, amount, slicePeriod, startTime, duration)
 
-            await expect(user_1.vesting.claim()).to.be.revertedWith('Cant claim zero tokens')
+            await expect(user_1.vesting.claim()).to.be.revertedWith('ZeroClaim()')
 
         })
 

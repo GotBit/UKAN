@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: NOLICENSE
-pragma solidity ^0.8.0;
+pragma solidity 0.8.15;
 
 import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
 
@@ -12,6 +12,6 @@ contract Token is ERC20 {
         uint8 decimals_
     ) ERC20(name_, symbol_) {
         _decimals = decimals_;
-        _mint(msg.sender, 1_000_000_000_000_000 ether);
+        _mint(msg.sender, 1_000_000_000_000_000 * (10**decimals_));
     }
 }
