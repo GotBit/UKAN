@@ -22,6 +22,10 @@ To get more information please check corresponding documentation.
 - User can claim his reward, if there's enough tokens on contract and reward is bigger than zero, whenever he wants
 - User should see how much tokens is available for claiming
 
+### Vesting tokenomic
+
+- Vesting contract should distribute tokens linearly. For example 0.1% of total vesting struct's amount should be vested each day for 1000 days.
+
 ## Test coverage statistics
 
 ```text
@@ -59,6 +63,8 @@ All files         |      100 |    92.86 |      100 |      100 |                |
 ## Vesting
 
 ### token
+
+Contracts contains mocked token, do not audit it.
 
 ```solidity
 contract IERC20 token
